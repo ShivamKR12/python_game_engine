@@ -1,0 +1,456 @@
+3D Game Engine
+│
+├── Core
+│   ├── Engine
+│   │   ├── Initialization
+│   │   │   ├── InitializeSystems
+│   │   │   ├── LoadConfig
+│   │   │   └── CreateWindow
+│   │   ├── MainLoop
+│   │   │   ├── HandleEvents
+│   │   │   ├── Update
+│   │   │   └── Render
+│   │   └── Shutdown
+│   │       ├── SaveState
+│   │       ├── DestroyWindow
+│   │       └── CleanupSystems
+│   ├── Window
+│   │   ├── CreateWindow
+│   │   │   ├── SetTitle
+│   │   │   ├── SetSize
+│   │   │   └── SetFullscreen
+│   │   ├── HandleEvents
+│   │   │   ├── OnResize
+│   │   │   ├── OnClose
+│   │   │   └── OnFocus
+│   │   └── DestroyWindow
+│   │       ├── ReleaseResources
+│   │       ├── UnregisterEvents
+│   │       └── CleanupContext
+│   ├── EventManager
+│   │   ├── RegisterEvent
+│   │   │   ├── AddToEventList
+│   │   │   ├── AssignCallback
+│   │   │   └── SetPriority
+│   │   ├── UnregisterEvent
+│   │   │   ├── RemoveFromEventList
+│   │   │   ├── RemoveCallback
+│   │   │   └── ReorderPriority
+│   │   ├── DispatchEvent
+│   │   │   ├── GetEventListeners
+│   │   │   ├── ExecuteCallbacks
+│   │   │   └── PropagateEvent
+│   │   └── HandleEvent
+│   │       ├── CaptureEvent
+│   │       ├── ValidateEvent
+│   │       └── ProcessEvent
+│   ├── SceneManager
+│   │   ├── LoadScene
+│   │   │   ├── ParseSceneFile
+│   │   │   ├── InstantiateObjects
+│   │   │   └── InitializeScene
+│   │   ├── UnloadScene
+│   │   │   ├── DestroyObjects
+│   │   │   ├── SaveSceneState
+│   │   │   └── ReleaseResources
+│   │   └── SwitchScene
+│   │       ├── UnloadCurrentScene
+│   │       ├── LoadNewScene
+│   │       └── TransitionEffects
+│   └── Time
+│       ├── DeltaTime
+│       │   ├── CalculateDeltaTime
+│       │   ├── GetPreviousTime
+│       │   └── SetCurrentTime
+│       ├── TimeScale
+│       │   ├── SetTimeScale
+│       │   ├── GetTimeScale
+│       │   └── AdjustTimeScale
+│       └── Timer
+│           ├── StartTimer
+│           ├── StopTimer
+│           └── ResetTimer
+│
+├── Graphics
+│   ├── Renderer
+│   │   ├── RenderLoop
+│   │   │   ├── ClearBuffers
+│   │   │   ├── RenderObjects
+│   │   │   └── SwapBuffers
+│   │   ├── DrawCall
+│   │   │   ├── SetShader
+│   │   │   ├── BindTextures
+│   │   │   └── DrawMesh
+│   │   ├── Framebuffer
+│   │   │   ├── CreateFramebuffer
+│   │   │   ├── BindFramebuffer
+│   │   │   └── DeleteFramebuffer
+│   │   └── RenderPipeline
+│   │       ├── AddRenderPass
+│   │       ├── RemoveRenderPass
+│   │       └── ExecuteRenderPasses
+│   ├── Shader
+│   │   ├── VertexShader
+│   │   │   ├── LoadVertexShader
+│   │   │   ├── CompileVertexShader
+│   │   │   └── AttachVertexShader
+│   │   ├── FragmentShader
+│   │   │   ├── LoadFragmentShader
+│   │   │   ├── CompileFragmentShader
+│   │   │   └── AttachFragmentShader
+│   │   ├── ShaderProgram
+│   │   │   ├── LinkShaders
+│   │   │   ├── UseProgram
+│   │   │   └── ValidateProgram
+│   │   └── ShaderLoader
+│   │       ├── ReadShaderFile
+│   │       ├── CompileShader
+│   │       └── CheckShaderErrors
+│   ├── Texture
+│   │   ├── LoadTexture
+│   │   │   ├── ReadTextureFile
+│   │   │   ├── GenerateTexture
+│   │   │   └── SetTextureParameters
+│   │   ├── BindTexture
+│   │   │   ├── BindToUnit
+│   │   │   ├── ActivateTexture
+│   │   │   └── BindTextureID
+│   │   └── TextureParameters
+│   │       ├── SetWrapMode
+│   │       ├── SetFilterMode
+│   │       └── SetMipMapping
+│   ├── Mesh
+│   │   ├── LoadMesh
+│   │   │   ├── ReadMeshFile
+│   │   │   ├── ParseMeshData
+│   │   │   └── UploadMeshToGPU
+│   │   ├── DrawMesh
+│   │   │   ├── BindVertexArray
+│   │   │   ├── BindIndexBuffer
+│   │   │   └── ExecuteDraw
+│   │   └── MeshData
+│   │       ├── VertexAttributes
+│   │       ├── IndexBuffer
+│   │       └── MaterialProperties
+│   ├── Camera
+│   │   ├── PerspectiveCamera
+│   │   │   ├── SetFOV
+│   │   │   ├── SetAspectRatio
+│   │   │   └── SetNearFarPlanes
+│   │   ├── OrthographicCamera
+│   │   │   ├── SetOrthographicSize
+│   │   │   ├── SetNearFarPlanes
+│   │   │   └── UpdateProjectionMatrix
+│   │   └── CameraControl
+│   │       ├── MoveCamera
+│   │       ├── RotateCamera
+│   │       └── ZoomCamera
+│   └── Light
+│       ├── DirectionalLight
+│       │   ├── SetDirection
+│       │   ├── SetIntensity
+│       │   └── SetColor
+│       ├── PointLight
+│       │   ├── SetPosition
+│       │   ├── SetIntensity
+│       │   └── SetRange
+│       └── SpotLight
+│           ├── SetPosition
+│           ├── SetDirection
+│           └── SetAngle
+│
+├── Physics
+│   ├── PhysicsEngine
+│   │   ├── Initialize
+│   │   │   ├── SetupWorld
+│   │   │   ├── RegisterColliders
+│   │   │   └── SetGravity
+│   │   ├── Update
+│   │   │   ├── ApplyForces
+│   │   │   ├── IntegrateMotion
+│   │   │   └── DetectCollisions
+│   │   └── Cleanup
+│   │       ├── DestroyWorld
+│   │       ├── UnregisterColliders
+│   │       └── ReleaseResources
+│   ├── Collider
+│   │   ├── BoxCollider
+│   │   │   ├── SetDimensions
+│   │   │   ├── SetPosition
+│   │   │   └── SetRotation
+│   │   ├── SphereCollider
+│   │   │   ├── SetRadius
+│   │   │   ├── SetPosition
+│   │   │   └── SetRotation
+│   │   └── MeshCollider
+│   │       ├── LoadMesh
+│   │       ├── SetPosition
+│   │       └── SetRotation
+│   ├── RigidBody
+│   │   ├── ApplyForce
+│   │   │   ├── SetForceVector
+│   │   │   ├── ApplyImpulse
+│   │   │   └── UpdateVelocity
+│   │   ├── ApplyTorque
+│   │   │   ├── SetTorqueVector
+│   │   │   ├── ApplyAngularImpulse
+│   │   │   └── UpdateAngularVelocity
+│   │   └── SetVelocity
+│   │       ├── SetLinearVelocity
+│   │       ├── SetAngularVelocity
+│   │       └── ClampVelocity
+│   └── CollisionDetection
+│       ├── AABB
+│       │   ├── ComputeBounds
+│       │   ├── CheckOverlap
+│       │   └── ResolveCollision
+│       ├── Raycast
+│       │   ├── CastRay
+│       │   ├── CheckIntersection
+│       │   └── ReportHit
+│       └── CollisionResponse
+│           ├── CalculateImpact
+│           ├── AdjustPositions
+│           └── AdjustVelocities
+│
+├── Input
+│   ├── InputManager
+│   │   ├── Initialize
+│   │   │   ├── RegisterDevices
+│   │   │   ├── ConfigureBindings
+│   │   │   └── SetupCallbacks
+│   │   ├── Update
+│   │   │   ├── PollDevices
+│   │   │   ├── ProcessInput
+│   │   │   └── DispatchEvents
+│   │   └── HandleInput
+│   │       ├── CaptureInput
+│   │       ├── ValidateInput
+│   │       └── ForwardInput
+│   ├── Keyboard
+│   │   ├── KeyPress
+│   │   │   ├── DetectKeyPress
+│   │   │   ├── RecordKey
+│   │   │   └── TriggerEvent
+│   │   ├── KeyRelease
+│   │   │   ├── DetectKeyRelease
+│   │   │   ├── ClearKey
+│   │   │   └── TriggerEvent
+│   │   └── KeyHold
+│   │       ├── DetectKeyHold
+│   │       ├── RecordDuration
+│   │       └── TriggerEvent
+│   ├── Mouse
+│   │   ├── MouseMove
+│   │   │   ├── DetectMovement
+│   │   │   ├── RecordPosition
+│   │   │   └── TriggerEvent
+│   │   ├── MouseClick
+│   │   │   ├── DetectClick
+│   │   │   ├── RecordButton
+│   │   │   └── TriggerEvent
+│   │   └── MouseScroll
+│   │       ├── DetectScroll
+│   │       ├── RecordDelta
+│   │       └── TriggerEvent
+│   └── Gamepad
+│       ├── ButtonPress
+│       │   ├── DetectButtonPress
+│       │   ├── RecordButton
+│       │   └── TriggerEvent
+│       ├── ButtonRelease
+│       │   ├── DetectButtonRelease
+│       │   ├── ClearButton
+│       │   └── TriggerEvent
+│       └── AxisMovement
+│           ├── DetectAxisMovement
+│           ├── RecordValue
+│           └── TriggerEvent
+│
+├── Audio
+│   ├── AudioEngine
+│   │   ├── Initialize
+│   │   │   ├── SetupAudioDevices
+│   │   │   ├── ConfigureSettings
+│   │   │   └── LoadAudioResources
+│   │   ├── Update
+│   │   │   ├── ProcessAudio
+│   │   │   ├── UpdateListeners
+│   │   │   └── ManagePlayback
+│   │   └── Cleanup
+│   │       ├── ReleaseAudioResources
+│   │       ├── ShutdownDevices
+│   │       └── SaveSettings
+│   ├── Sound
+│   │   ├── LoadSound
+│   │   │   ├── ReadSoundFile
+│   │   │   ├── DecodeSoundData
+│   │   │   └── UploadToMemory
+│   │   ├── PlaySound
+│   │   │   ├── StartPlayback
+│   │   │   ├── SetVolume
+│   │   │   └── SetLoop
+│   │   ├── PauseSound
+│   │   │   ├── PausePlayback
+│   │   │   ├── SavePosition
+│   │   │   └── UpdateStatus
+│   │   └── StopSound
+│   │       ├── StopPlayback
+│   │       ├── ResetPosition
+│   │       └── UpdateStatus
+│   └── Listener
+│       ├── SetPosition
+│       │   ├── UpdateCoordinates
+│       │   ├── ApplyTransformation
+│       │   └── NotifyEngine
+│       ├── SetOrientation
+│       │   ├── UpdateRotation
+│       │   ├── ApplyTransformation
+│       │   └── NotifyEngine
+│       └── SetVolume
+│           ├── AdjustVolume
+│           ├── ApplySettings
+│           └── NotifyEngine
+│
+├── Scripting
+│   ├── ScriptEngine
+│   │   ├── Initialize
+│   │   │   ├── LoadInterpreter
+│   │   │   ├── RegisterFunctions
+│   │   │   └── ConfigureEnvironment
+│   │   ├── LoadScript
+│   │   │   ├── ReadScriptFile
+│   │   │   ├── ParseScript
+│   │   │   └── CompileScript
+│   │   └── ExecuteScript
+│   │       ├── RunScript
+│   │       ├── HandleErrors
+│   │       └── ReturnOutput
+│   └── ScriptComponent
+│       ├── AddScript
+│       │   ├── AttachToObject
+│       │   ├── RegisterWithEngine
+│       │   └── InitializeScript
+│       ├── RemoveScript
+│       │   ├── DetachFromObject
+│       │   ├── UnregisterFromEngine
+│       │   └── CleanupResources
+│       └── UpdateScript
+│           ├── ExecuteUpdate
+│           ├── HandleEvents
+│           └── SynchronizeState
+│
+├── ECS (Entity Component System)
+│   ├── Entity
+│   │   ├── CreateEntity
+│   │   │   ├── GenerateID
+│   │   │   ├── RegisterEntity
+│   │   │   └── InitializeComponents
+│   │   ├── DestroyEntity
+│   │   │   ├── UnregisterEntity
+│   │   │   ├── RemoveComponents
+│   │   │   └── ReleaseResources
+│   │   └── GetEntity
+│   │       ├── FetchEntity
+│   │       ├── ValidateID
+│   │       └── ReturnEntity
+│   ├── Component
+│   │   ├── AddComponent
+│   │   │   ├── AttachToEntity
+│   │   │   ├── InitializeData
+│   │   │   └── RegisterWithSystem
+│   │   ├── RemoveComponent
+│   │   │   ├── DetachFromEntity
+│   │   │   ├── CleanupData
+│   │   │   └── UnregisterFromSystem
+│   │   └── GetComponent
+│   │       ├── FetchComponent
+│   │       ├── ValidateType
+│   │       └── ReturnComponent
+│   ├── System
+│   │   ├── AddSystem
+│   │   │   ├── RegisterWithWorld
+│   │   │   ├── InitializeSystem
+│   │   │   └── SetupDependencies
+│   │   ├── RemoveSystem
+│   │   │   ├── UnregisterFromWorld
+│   │   │   ├── CleanupResources
+│   │   │   └── ReleaseDependencies
+│   │   └── UpdateSystem
+│   │       ├── ProcessEntities
+│   │       ├── ExecuteLogic
+│   │       └── HandleEvents
+│   └── World
+│       ├── Initialize
+│       │   ├── SetupWorld
+│       │   ├── RegisterEntities
+│       │   └── ConfigureSystems
+│       ├── Update
+│       │   ├── UpdateEntities
+│       │   ├── UpdateSystems
+│       │   └── HandleEvents
+│       └── Cleanup
+│           ├── ReleaseEntities
+│           ├── ReleaseSystems
+│           └── SaveWorldState
+│
+└── Utils
+    ├── Math
+    │   ├── Vector
+    │   │   ├── CreateVector
+    │   │   ├── AddVectors
+    │   │   ├── SubtractVectors
+    │   │   └── MultiplyVector
+    │   ├── Matrix
+    │   │   ├── CreateMatrix
+    │   │   ├── MultiplyMatrices
+    │   │   ├── InvertMatrix
+    │   │   └── TransposeMatrix
+    │   └── Quaternion
+    │       ├── CreateQuaternion
+    │       ├── MultiplyQuaternions
+    │       ├── InvertQuaternion
+    │       └── NormalizeQuaternion
+    ├── FileIO
+    │   ├── ReadFile
+    │   │   ├── OpenFile
+    │   │   ├── ReadContents
+    │   │   └── CloseFile
+    │   ├── WriteFile
+    │   │   ├── OpenFile
+    │   │   ├── WriteContents
+    │   │   └── CloseFile
+    │   └── ParseData
+    │       ├── ParseJSON
+    │       ├── ParseXML
+    │       └── ParseBinary
+    ├── Logging
+    │   ├── InitializeLogger
+    │   │   ├── ConfigureSettings
+    │   │   ├── SetupOutput
+    │   │   └── RegisterEvents
+    │   ├── LogMessage
+    │   │   ├── FormatMessage
+    │   │   ├── AppendToLog
+    │   │   └── TriggerEvent
+    │   └── ShutdownLogger
+    │       ├── SaveLog
+    │       ├── ReleaseResources
+    │       └── CleanupEvents
+    └── Debugging
+        ├── InitializeDebugger
+        │   ├── SetupHooks
+        │   ├── ConfigureSettings
+        │   └── RegisterEvents
+        ├── DebugMessage
+        │   ├── CaptureContext
+        │   ├── FormatMessage
+        │   └── OutputMessage
+        └── ShutdownDebugger
+            ├── ReleaseHooks
+            ├── SaveDebugLog
+            └── CleanupEvents
+
+
+it shouls always be in the form of tree diagam as i have asked you above and it should be the continuation of the already avaliable above tree diagram.
+

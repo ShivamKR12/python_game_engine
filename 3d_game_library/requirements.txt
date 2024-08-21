@@ -1,0 +1,8 @@
+# Core Libraries
+panda3d==1.11.0
+pyglet==2.0.0
+pygame==2.3.0
+
+# Additional Libraries
+numpy==1.24.0
+Pillow==10.0.0
